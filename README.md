@@ -110,3 +110,10 @@ const registerService = asyncHandler(async (userData)=>{
 write test file in tests folder as user.test.js
 
 - 
+
+## 10. Task Split
+
+- Vaibhav : Project setup, Dealer, 
+- Shrikant : Car
+- Musadhiek : Auction
+- Kiran : Bid
