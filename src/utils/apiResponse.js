@@ -1,4 +1,4 @@
-import HTTP_STATUS from '../constant.js';
+import HTTP_STATUS from '../constant';
 
 class ApiResponse {
   constructor(statusCode, data, message = 'Success') {
@@ -9,4 +9,4 @@ class ApiResponse {
   }
 }
 
-export { ApiResponse };
+export default ApiResponse;
