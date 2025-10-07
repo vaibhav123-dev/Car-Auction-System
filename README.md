@@ -26,50 +26,106 @@ JWT_SECRET=your_jwt_secret
 JWT_EXPIRY=1h
 ```
 
-## 4. Local setup
+//Replace `<username>` and `<password>` with your credentials.
 
-- git clone https://github.com/vaibhav123-dev/Car-Auction-System.git
-- cd Car-auction-system
-- npm install 
-- npm run prepare        # runs "prepare" to install Husky
-                         # if npm install fails with ERESOLVE: 
-                         # npm install --legacy-peer-deps
-- copy .env.sample into .env   # fill values (MONGO_URI, JWT_SECRET, etc.)
-- npm run dev            # starts server with nodemon (see package.json)
+---
 
-## 5. Branching & PR flow
- 
-- main - (Protected no direct pushes)
-- Each dev will create a branch from main 
-- branch should look like feature/<entity>/<short-disc>  #example : feature/car/create-model, feature/car/create-controller 
-- git checkout dev
-- git pull origin main
-- git checkout -b feature/car/create-model
-          # code, test, lint, commit...
-- git push origin feature/car/create-model
-          # open PR to main, request one reviewer
+## 4. Local Setup
 
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/vaibhav123-dev/Car-Auction-System.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Car-auction-system
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+   - If you encounter `ERESOLVE` errors, use:
+     ```bash
+     npm install --legacy-peer-deps
+     ```
+4. Install Husky hooks:
+   ```bash
+   npm run prepare
+   ```
+5. Copy `.env.sample` to `.env` and fill in the required values:
+   - `MONGO_URI`, `JWT_SECRET`, etc.
+6. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   This will start the server with `nodemon` (see `package.json` for details).
 
-## 6. Linting, formatting & pre-push hooks
+---
 
-- Lint: npm run lint
-- Auto-fix lint: npm run lint-fix
-- Format: npm run format
-- Tests : npm run test
+## 5. Branching & PR Flow
 
-// Husky pre-push will run npm run lint && npm run test. If your push is blocked, fix linter errors/tests locally, then re-commit & push.
+- **Main Branch**: Protected (no direct pushes allowed).
+- **Feature Branches**: Each developer creates a branch from `main`:
+  ```bash
+  git checkout main
+  git pull origin main
+  git checkout -b feature/<entity>/<short-description>
+  ```
+  Example:
+  ```bash
+  feature/car/create-model
+  feature/car/create-controller
+  ```
+- After completing the work:
+  ```bash
+  git push origin feature/<entity>/<short-description>
+  ```
+- Open a Pull Request (PR) to `main` and request one reviewer.
 
-## 7. API endpoint structure
+---
 
-- /api/v1/auction
+## 6. Linting, Formatting & Pre-Push Hooks
+
+- **Lint**: 
+  ```bash
+  npm run lint
+  ```
+- **Auto-fix Lint Errors**:
+  ```bash
+  npm run lint-fix
+  ```
+- **Format Code**:
+  ```bash
+  npm run format
+  ```
+- **Run Tests**:
+  ```bash
+  npm run test
+  ```
+
+> **Note**: Husky pre-push hooks will run `npm run lint && npm run test`.  
+> If your push is blocked, fix linter errors/tests locally, then re-commit and push.
+
+---
+
+## 7. API Endpoint Structure
+
+- Base URL: `/api/v1/auction`
+
+---
 
 ## 8. Validation
 
-- create joi validation file in validation folder, use that to validated incoming req payload in controller
+- Create a **JOI validation file** in the `validation` folder.
+- Use this file to validate incoming request payloads in the controller.
 
-## 9. Development code look like
+---
 
-- model 
+## 9. Development Code Structure
+
+### Model
+
+```javascript
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
@@ -79,41 +135,55 @@ const UserSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 export default mongoose.model('User', UserSchema);
+```
 
-- routes
- //in routes/index.js
- router.use('user', userRoutes)
- //in user.routes.js
- routes.route.post('/register', registerUser)
+### Routes
 
-- controller
-const registerUser = asyncHandler(async (req, res, next)=>{
-    //validation
-    // business logic in service.js file
-    // you dont need to handle the exceptional error asyncHandler and errorMiddleware will handle that automatically.
-    // for validation or logic error follow below code structure
-    
-    throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'User already exits')
+In `routes/index.js`:
+```javascript
+router.use('user', userRoutes);
+```
 
-    //for response follow below structure
+In `user.routes.js`:
+```javascript
+routes.route.post('/register', registerUser);
+```
 
-    res.status(HTTP_STATUS.CREATED).json(new ApiResponse(HTTP_STATUS.CREATED, {data}, 'message'))
-})
+### Controller
 
-- service 
-const registerService = asyncHandler(async (userData)=>{
-    //get input for query from controller
-    //all bussiness and db query logic and then return the response to controller
-})
+```javascript
+const registerUser = asyncHandler(async (req, res, next) => {
+    // Validation
+    // Business logic in service.js file
+    // You don't need to handle exceptional errors; asyncHandler and errorMiddleware will handle them automatically.
+    // For validation or logic errors, follow the structure below:
 
-- test
-write test file in tests folder as user.test.js
+    throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'User already exists');
 
-- 
+    // For responses, follow the structure below:
+    res.status(HTTP_STATUS.CREATED).json(new ApiResponse(HTTP_STATUS.CREATED, { data }, 'message'));
+});
+```
+
+### Service
+
+```javascript
+const registerService = asyncHandler(async (userData) => {
+    // Get input for query from controller
+    // All business and DB query logic, then return the response to the controller
+});
+```
+
+### Tests
+
+Write test files in the `tests` folder. For example:
+- `user.test.js`
+
+---
 
 ## 10. Task Split
 
-- Vaibhav : Project setup, Dealer, 
-- Shrikant : Car
-- Musadhiek : Auction
-- Kiran : Bid
+- **Vaibhav**: Project setup, Dealer
+- **Shrikant**: Car
+- **Musadhiek**: Auction
+- **Kiran**: Bid
