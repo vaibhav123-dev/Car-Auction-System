@@ -13,7 +13,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/prefer-default-export': 'off',
-    'prefer-regular-expressions': 'off',
+    'prefer-regex-literals': 'off',
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
     // ✅ Allow .js extensions in ESM imports
     'import/extensions': [
