@@ -44,6 +44,7 @@ JWT_EXPIRY=1h
    ```bash
    npm install
    ```
+
    - If you encounter `ERESOLVE` errors, use:
      ```bash
      npm install --legacy-peer-deps
@@ -86,7 +87,7 @@ JWT_EXPIRY=1h
 
 ## 6. Linting, Formatting & Pre-Push Hooks
 
-- **Lint**: 
+- **Lint**:
   ```bash
   npm run lint
   ```
@@ -128,11 +129,14 @@ JWT_EXPIRY=1h
 ```javascript
 import mongoose from 'mongoose';
 
-const UserSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: Number, required: true },
-}, { timestamps: true });
+const UserSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: Number, required: true },
+  },
+  { timestamps: true },
+);
 
 export default mongoose.model('User', UserSchema);
 ```
@@ -140,11 +144,13 @@ export default mongoose.model('User', UserSchema);
 ### Routes
 
 In `routes/index.js`:
+
 ```javascript
 router.use('user', userRoutes);
 ```
 
 In `user.routes.js`:
+
 ```javascript
 routes.route.post('/register', registerUser);
 ```
@@ -153,15 +159,15 @@ routes.route.post('/register', registerUser);
 
 ```javascript
 const registerUser = asyncHandler(async (req, res, next) => {
-    // Validation
-    // Business logic in service.js file
-    // You don't need to handle exceptional errors; asyncHandler and errorMiddleware will handle them automatically.
-    // For validation or logic errors, follow the structure below:
+  // Validation
+  // Business logic in service.js file
+  // You don't need to handle exceptional errors; asyncHandler and errorMiddleware will handle them automatically.
+  // For validation or logic errors, follow the structure below:
 
-    throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'User already exists');
+  throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'User already exists');
 
-    // For responses, follow the structure below:
-    res.status(HTTP_STATUS.CREATED).json(new ApiResponse(HTTP_STATUS.CREATED, { data }, 'message'));
+  // For responses, follow the structure below:
+  res.status(HTTP_STATUS.CREATED).json(new ApiResponse(HTTP_STATUS.CREATED, { data }, 'message'));
 });
 ```
 
@@ -169,14 +175,15 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
 ```javascript
 const registerService = asyncHandler(async (userData) => {
-    // Get input for query from controller
-    // All business and DB query logic, then return the response to the controller
+  // Get input for query from controller
+  // All business and DB query logic, then return the response to the controller
 });
 ```
 
 ### Tests
 
 Write test files in the `tests` folder. For example:
+
 - `user.test.js`
 
 ---
