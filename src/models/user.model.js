@@ -27,11 +27,11 @@ userSchema.methods.generateAccessToken = function () {
     {
       _id: this._id,
       email: this.email,
-      fullName: this.fullName,
+      role: this.role,
     },
-    process.env.ACCESS_TOKEN_SECRET,
+    process.env.JWT_SECRET,
     {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+      expiresIn: process.env.JWT_SECRET_EXPIRY || '1d',
     },
   );
 };
