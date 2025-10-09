@@ -56,14 +56,14 @@ export const getCars = asyncHandler(async (req, res) => {
   const filters = {};
   if (make) filters.make = make;
   if (model) filters.model = model;
-  if (year) filters.year = parseInt(year);
+  if (year) filters.year = parseInt(year, 10);
   if (status) filters.status = status;
 
   // Price range filter
   if (minPrice || maxPrice) {
     filters.price = {};
-    if (minPrice) filters.price.$gte = parseInt(minPrice);
-    if (maxPrice) filters.price.$lte = parseInt(maxPrice);
+    if (minPrice) filters.price.$gte = parseInt(minPrice, 10);
+    if (maxPrice) filters.price.$lte = parseInt(maxPrice, 10);
   }
 
   const cars = await getCarsService(filters);

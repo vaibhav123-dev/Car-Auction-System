@@ -6,8 +6,7 @@ import HTTP_STATUS from '../constant.js';
  * @param {String} role - The required role
  * @returns {Function} Middleware function
  */
-export const requireRole = (role) => {
-  return (req, res, next) => {
+export const requireRole = (role) => (req, res, next) => {
     // verifyJWT middleware should be called before this middleware
     // to ensure req.user is available
     if (!req.user) {
@@ -15,15 +14,11 @@ export const requireRole = (role) => {
     }
 
     if (req.user.role !== role) {
-      throw new ApiError(
-        HTTP_STATUS.FORBIDDEN, 
-        `Access denied. ${role} role required.`
-      );
+      throw new ApiError(HTTP_STATUS.FORBIDDEN, `Access denied. ${role} role required.`);
     }
 
     next();
   };
-};
 
 /**
  * Middleware to check if a user has admin role
@@ -37,10 +32,7 @@ export const requireAdmin = (req, res, next) => {
   }
 
   if (req.user.role !== 'admin') {
-    throw new ApiError(
-      HTTP_STATUS.FORBIDDEN, 
-      'Access denied. Admin role required.'
-    );
+    throw new ApiError(HTTP_STATUS.FORBIDDEN, 'Access denied. Admin role required.');
   }
 
   next();

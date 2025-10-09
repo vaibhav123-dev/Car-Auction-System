@@ -9,15 +9,10 @@ const router = express.Router();
 router.use(verifyJWT);
 
 // Create car requires admin role, get all cars is available to all authenticated users
-router.route('/')
-  .post(requireAdmin, createCar)
-  .get(getCars);
+router.route('/').post(requireAdmin, createCar).get(getCars);
 
 // Get is available to all authenticated users
 // Update and delete require admin role
-router.route('/:id')
-  .get(getCar)
-  .put(requireAdmin, updateCar)
-  .delete(requireAdmin, deleteCar);
+router.route('/:id').get(getCar).put(requireAdmin, updateCar).delete(requireAdmin, deleteCar);
 
 export default router;

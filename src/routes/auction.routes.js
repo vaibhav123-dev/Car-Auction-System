@@ -15,18 +15,13 @@ const router = express.Router();
 router.use(verifyJWT);
 
 // Create auction requires admin role, get all auctions is available to all authenticated users
-router.route('/')
-  .post(requireAdmin, createAuction)
-  .get(getAuctions);
+router.route('/').post(requireAdmin, createAuction).get(getAuctions);
 
 // Get is available to all authenticated users
 // Update requires admin role
-router.route('/:id')
-  .get(getAuction)
-  .put(requireAdmin, updateAuction);
+router.route('/:id').get(getAuction).put(requireAdmin, updateAuction);
 
 // Start auction requires admin role
-router.route('/:id/start')
-  .post(requireAdmin, startAuction);
+router.route('/:id/start').post(requireAdmin, startAuction);
 
 export default router;
