@@ -1,6 +1,8 @@
 import express from 'express';
-// import carRoutes from './car.routes.js';
+import userRoutes from './user.routes.js';
+
 const router = express.Router();
 
-// router.use('/cars', carRoutes)
+router.use('/user', userRoutes);
+
 export default router;
