@@ -10,7 +10,7 @@
     "lint": "eslint 'src/**/*.{js,jsx,json}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx,json}' --fix",
     "format": "prettier --write 'src/**/*.{js,jsx,json,md}'",
-    "test": "jest --detectOpenHandles --forceExit --passWithNoTests",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles --forceExit",
     "prepare": "husky install"
   },
   "lint-staged": {

@@ -39,7 +39,7 @@ export const loginUserService = async (userData) => {
     throw new ApiError(HTTP_STATUS.UNAUTHORIZED, 'Invalid credientials');
   }
 
-  let token = user.generateAccessToken();
+  const token = user.generateAccessToken();
 
   delete user.password;
 
