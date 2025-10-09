@@ -5,7 +5,7 @@ import HTTP_STATUS from '../constant.js';
 /**
  * Registers a new user
  * @param {Object} userData - The user details { name, email, password }
- * @returns {Object} Created user
+ * @returns {Object} Created user data
  */
 
 export const registerUserService = async (userData) => {
