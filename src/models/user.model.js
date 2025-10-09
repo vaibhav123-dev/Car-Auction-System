@@ -36,4 +36,4 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
-export default model('Dealer', userSchema);
+export default model('User', userSchema);

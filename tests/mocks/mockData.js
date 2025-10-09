@@ -54,3 +54,42 @@ export const mockNext = jest.fn();
 
 // Mock error
 export const mockError = new Error('Test error');
+
+// Mock car data
+export const mockCar = {
+  _id: '60d0fe4f5311236168a109cb',
+  make: 'Toyota',
+  model: 'Camry',
+  year: 2020,
+  price: 25000,
+  description: 'Well maintained sedan',
+  images: ['image1.jpg', 'image2.jpg'],
+  owner: '60d0fe4f5311236168a109ca',
+  status: 'available',
+};
+
+// Mock car with populated owner
+export const mockPopulatedCar = {
+  ...mockCar,
+  owner: {
+    _id: '60d0fe4f5311236168a109ca',
+    name: 'Test User',
+    email: 'test@example.com',
+  },
+};
+
+// Mock auction data
+export const mockAuction = {
+  _id: '60d0fe4f5311236168a109cc',
+  carId: mockCar._id,
+  startingPrice: 20000,
+  startTime: new Date('2025-10-10T10:00:00Z'),
+  endTime: new Date('2025-10-15T10:00:00Z'),
+  status: 'draft',
+};
+
+// Mock populated auction data
+export const mockPopulatedAuction = {
+  ...mockAuction,
+  carId: mockCar,
+};
