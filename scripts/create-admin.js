@@ -1,7 +1,9 @@
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 import { program } from 'commander';
 import User from '../src/models/user.model.js';
-import '../src/config/db.js';
+import connectDB from '../src/config/db.js';
+
 
 dotenv.config();
 
@@ -15,6 +17,10 @@ const options = program.opts();
 
 const createAdmin = async () => {
   try {
+
+    // Establish connection DB
+    await connectDB();
+
     // Check if user already exists
     const existingUser = await User.findOne({ email: options.email });
     
@@ -40,7 +46,8 @@ const createAdmin = async () => {
       
       console.log(`Admin user created successfully: ${newAdmin.email}`);
     }
-    
+    await mongoose.disconnect();
+    console.log('MongoDB connection closed');
     process.exit(0);
   } catch (error) {
     console.error('Error creating admin user:', error.message);

@@ -93,3 +93,15 @@ export const mockPopulatedAuction = {
   ...mockAuction,
   carId: mockCar,
 };
+
+// Mock BidData
+export const mockBid = {
+  _id: 'bid123',
+  auction_id: 'auction123',
+  dealer_id: 'dealer123',
+  amount: 15000,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  // ...any other needed fields
+};
+

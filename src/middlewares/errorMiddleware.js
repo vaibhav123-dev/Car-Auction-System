@@ -6,7 +6,7 @@ const routeNotFound = (req, res, next) => {
 
 const errorHandler = (err, req, res, next) => {
   // If statusCode not set, default to 500
-  let statusCode = res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
+  let statusCode = res.statusCode && res.statusCode !== 200 ? err.statusCode : 500;
   let { message } = err;
 
   // Handle Mongoose ObjectId errors
