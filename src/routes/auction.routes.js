@@ -6,6 +6,7 @@ import {
   getAuction,
   getAuctions,
 } from '../controllers/auction.controller.js';
+import {placeBid, winnerBid} from '../controllers/bid.controller.js'
 import verifyJWT from '../middlewares/auth.middleware.js';
 import { requireAdmin } from '../middlewares/role.middleware.js';
 
@@ -23,5 +24,11 @@ router.route('/:id').get(getAuction).put(requireAdmin, updateAuction);
 
 // Start auction requires admin role
 router.route('/:id/start').post(requireAdmin, startAuction);
+
+// Place the Bid
+router.route('/placeBids').post(placeBid)
+
+// Get the final winner of the bid
+router.route('/:auctionId/winner-bid').get(winnerBid)
 
 export default router;

@@ -5,7 +5,6 @@ import Auction from '../models/auction.model.js';
 import Bid from '../models/bid.model.js';
 
 export const placeBidService = async (value) => {
-    try {
         const { auctionId, amount, dealerId } = value;
 
         // Validate auction
@@ -37,7 +36,7 @@ export const placeBidService = async (value) => {
         }
 
         // Check against last bid
-        const lastBid = await Bid.findOne({ auctionId }).sort({ createdAt: -1 });
+        const lastBid = await Bid.findOne({ auction_id:auctionId }).sort({ createdAt: -1 });
         if (lastBid && amount <= lastBid.amount) {
             throw new ApiError(
                 HTTP_STATUS.BAD_REQUEST,
@@ -68,22 +67,12 @@ export const placeBidService = async (value) => {
         // Fetch bid with dealer + previous bid details
         const populatedBid = await Bid.findById(newBid._id)
             .populate('dealer_id', 'name email role')
-            .populate('previous_bid_id', 'dealerId amount createdAt');
+            .populate('previous_bid_id', 'dealer_id amount createdAt');
 
         return populatedBid;
-    } catch (err) {
-
-        if (err instanceof ApiError) throw err;
-        console.error(err)
-        throw new ApiError(
-            HTTP_STATUS.INTERNAL_SERVER_ERROR,
-            'Something went wrong while placing the bid'
-        );
-    }
 };
 
 export const getWinnerBidService = async(auctionId) =>{
-    try{
         // Validate auction
         const auction = await Auction.findById(auctionId);
         if (!auction) {
@@ -95,13 +84,5 @@ export const getWinnerBidService = async(auctionId) =>{
             .sort({ amount: -1 })
             .populate('dealer_id', 'name email role');
         return winnerBid;
-    }
-    catch(err){
-        if (err instanceof ApiError) throw err;
-        console.error(err)
-        throw new ApiError(
-            HTTP_STATUS.INTERNAL_SERVER_ERROR,
-            'Something went wrong while fetching the winner bid'
-        );
-    }
-}
+    
+};

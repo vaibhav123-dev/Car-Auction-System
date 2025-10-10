@@ -5,8 +5,7 @@ import { placeBidService, getWinnerBidService } from '../services/bid.service.js
 import ApiResponse from '../utils/apiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
 
-export const placeBid = asyncHandler(async (req, res, next) => {
-  try {
+export const placeBid = asyncHandler(async (req, res) => {
      req.body.dealer_id = req.user._id.toString();
 
     const { error, value } = bidValidationSchema.validate(req.body, { abortEarly: false });
@@ -29,13 +28,9 @@ export const placeBid = asyncHandler(async (req, res, next) => {
     }
 
     return ApiResponse.created(res, { details }, 'Bid added successfully');
-  } catch (err) {
-   return next(err);
-  }
 });
 
-export const winnerBid = asyncHandler(async(req,res,next) => {
-  try {
+export const winnerBid = asyncHandler(async(req,res) => {
     const {auctionId} = req.params;
     if(!auctionId){
       throw new ApiError(HTTP_STATUS.BAD_REQUEST, "Auction ID is required");
@@ -46,8 +41,4 @@ export const winnerBid = asyncHandler(async(req,res,next) => {
       throw new ApiError(HTTP_STATUS.NOT_FOUND, "No bids found for this auction");
     }
     return ApiResponse.success(res, {details}, "Winner bid fetched successfully");
-  } catch(err){
-    console.log(err)
-    return next(err);
-  }
 })

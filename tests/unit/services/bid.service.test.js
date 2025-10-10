@@ -63,7 +63,7 @@ describe('Bid Service', () => {
       const result = await placeBidService(validInput);
       expect(Auction.findById).toHaveBeenCalledWith(validInput.auctionId);
       expect(User.findById).toHaveBeenCalledWith(validInput.dealerId);
-      expect(Bid.findOne).toHaveBeenCalledWith({ auctionId: validInput.auctionId });
+      expect(Bid.findOne).toHaveBeenCalledWith({ auction_id: validInput.auctionId });
       expect(Bid.create).toHaveBeenCalledWith({
         amount: validInput.amount,
         dealer_id: validInput.dealerId,
@@ -101,16 +101,14 @@ describe('Bid Service', () => {
     });
 
     it('should throw if bid amount too low', async () => {
-      Auction.findById.mockResolvedValue({ ...mockAuction, status: 'active', startingPrice: 26000, save: jest.fn() });
-      User.findById.mockResolvedValue({ role: 'dealer' });
-      await expect(placeBidService({ ...validInput, amount: 20000 })).rejects.toThrow(ApiError);
-
       Auction.findById.mockResolvedValue({ ...mockAuction, status: 'active', startingPrice: 10000, save: jest.fn() });
+      User.findById.mockResolvedValue({ role: 'dealer' });
+
+      // Correct mock for sort() as a Promise
       Bid.findOne.mockReturnValue({
-        sort: jest.fn().mockReturnValue({
-          exec: jest.fn().mockResolvedValue({ amount: 27000 }),
-        }),
+        sort: jest.fn().mockResolvedValue({ amount: 27000, _id: 'existingBidId' }),
       });
+
       await expect(placeBidService({ ...validInput, amount: 26000 })).rejects.toThrow(ApiError);
     });
 
