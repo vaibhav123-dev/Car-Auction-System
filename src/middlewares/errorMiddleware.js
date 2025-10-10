@@ -5,6 +5,7 @@ const routeNotFound = (req, res, next) => {
 };
 
 const errorHandler = (err, req, res, next) => {
+  console.log(err)
   // If statusCode not set, default to 500
   let statusCode = res.statusCode && res.statusCode !== 200 ? err.statusCode : 500;
   let { message } = err;

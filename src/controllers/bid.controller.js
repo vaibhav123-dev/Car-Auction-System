@@ -16,8 +16,14 @@ export const placeBid = asyncHandler(async (req, res, next) => {
         error.details.map((detail) => detail.message).join(', ')
       );
     }
+    
+    const values = {
+      auctionId: value.auction_id,
+      dealerId: value.dealer_id,
+      amount: value.amount,
+    }
 
-    const details = await placeBidService(value);
+    const details = await placeBidService(values);
     if(!details){
         throw new ApiError(HTTP_STATUS.BAD_REQUEST, "Failed to place bid");
     }

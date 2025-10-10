@@ -21,16 +21,16 @@ describe('Bid Service', () => {
 
   describe('placeBidService', () => {
     const validInput = {
-      auction_id: mockAuction._id,
+      auctionId: mockAuction._id,
       amount: 25000,
-      dealer_id: mockUser._id,
+      dealerId: mockUser._id,
     };
 
     it('should place a bid successfully (first bid scenario)', async () => {
       const validInput = {
-        auction_id: mockAuction._id,
+        auctionId: mockAuction._id,
         amount: 25000,
-        dealer_id: mockUser._id,
+        dealerId: mockUser._id,
       };
 
       // Mock auction found and status active
@@ -61,14 +61,13 @@ describe('Bid Service', () => {
       });
 
       const result = await placeBidService(validInput);
-
-      expect(Auction.findById).toHaveBeenCalledWith(mockAuction._id);
-      expect(User.findById).toHaveBeenCalledWith(mockUser._id);
-      expect(Bid.findOne).toHaveBeenCalledWith({ auction_id: mockAuction._id });
+      expect(Auction.findById).toHaveBeenCalledWith(validInput.auctionId);
+      expect(User.findById).toHaveBeenCalledWith(validInput.dealerId);
+      expect(Bid.findOne).toHaveBeenCalledWith({ auctionId: validInput.auctionId });
       expect(Bid.create).toHaveBeenCalledWith({
         amount: validInput.amount,
-        dealer_id: validInput.dealer_id,
-        auction_id: validInput.auction_id
+        dealer_id: validInput.dealerId,
+        auction_id: validInput.auctionId
       });
       expect(result).toEqual(mockBid);
     });
