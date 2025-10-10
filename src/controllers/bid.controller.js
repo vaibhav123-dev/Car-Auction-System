@@ -30,7 +30,7 @@ export const placeBid = asyncHandler(async (req, res, next) => {
 
     return ApiResponse.created(res, { details }, 'Bid added successfully');
   } catch (err) {
-    next(err);
+   return next(err);
   }
 });
 
@@ -48,6 +48,6 @@ export const winnerBid = asyncHandler(async(req,res,next) => {
     return ApiResponse.success(res, {details}, "Winner bid fetched successfully");
   } catch(err){
     console.log(err)
-    next(err);
+    return next(err);
   }
 })

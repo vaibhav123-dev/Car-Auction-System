@@ -30,18 +30,6 @@ class ApiResponse {
   static error(res, message = 'Something went wrong', statusCode = HTTP_STATUS.BAD_REQUEST) {
     return new ApiResponse(statusCode, {}, message).send(res);
   }
-
-  static success(res, data, message = 'Success') {
-    return res.status(HTTP_STATUS.OK).json(new ApiResponse(HTTP_STATUS.OK, data, message));
-  }
-
-  static created(res, data, message = 'Resource created successfully') {
-    return res.status(HTTP_STATUS.CREATED).json(new ApiResponse(HTTP_STATUS.CREATED, data, message));
-  }
-
-  static error(res, statusCode, message = 'Error') {
-    return res.status(statusCode).json(new ApiResponse(statusCode, null, message));
-  }
 }
 
 export default ApiResponse;
