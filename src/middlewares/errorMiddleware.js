@@ -1,3 +1,5 @@
+import logger from "../utils/logger.js";
+
 const routeNotFound = (req, res, next) => {
   const error = new Error(`Route not found: ${req.originalUrl}`);
   res.status(404); // this is fine here
@@ -5,8 +7,9 @@ const routeNotFound = (req, res, next) => {
 };
 
 const errorHandler = (err, req, res, next) => {
+  logger.error(err)
   // If statusCode not set, default to 500
-  let statusCode = res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
+  let statusCode = res.statusCode && res.statusCode !== 200 ? err.statusCode : 500;
   let { message } = err;
 
   // Handle Mongoose ObjectId errors
