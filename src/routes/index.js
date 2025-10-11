@@ -5,7 +5,6 @@ import carRoutes from './car.routes.js';
 import bidRoutes from './bid.routes.js';
 
 const router = express.Router();
-// import carRoutes from './car.routes.js';
 
 router.use('/user', userRoutes);
 router.use('/auction', auctionRoutes);
